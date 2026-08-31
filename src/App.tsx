@@ -1,53 +1,17 @@
-import { invoke } from "@tauri-apps/api/core";
+
+import { getCurrentWindow } from "@tauri-apps/api/window";
+import { Overlay } from "./components/overlay/Overlay";
+import Dashboard from "./components/dashboard/Dashboard";
+
 
 function App() {
-  const showOverlay = async () => {
-    console.log("Calling show_overlay...");
-  
-    try {
-      const result = await invoke("show_overlay");
-  
-      console.log("Rust returned:", result);
-    } catch (error) {
-      console.error("Tauri command failed:", error);
-    }
-  };
+  const currentWindow = getCurrentWindow();
 
-  const hideOverlay = async () => {
-    try {
-      await invoke("hide_overlay");
-      console.log("Overlay hidden");
-    } catch (error) {
-      console.error("Failed to hide overlay:", error);
-    }
-  };
+  if (currentWindow.label === "overlay") {
+    return <Overlay />
+  }
 
-  const toggleOverlay = async () => {
-    try {
-      await invoke("toggle_overlay");
-      console.log("Overlay toggled");
-    } catch (error) {
-      console.error("Failed to toggle overlay:", error);
-    }
-  };
-
-  return (
-    <div>
-      <h1>Clueless</h1>
-
-      <button onClick={showOverlay}>
-        Show Overlay
-      </button>
-
-      <button onClick={hideOverlay}>
-        Hide Overlay
-      </button>
-
-      <button onClick={toggleOverlay}>
-        Toggle Overlay
-      </button>
-    </div>
-  );
+  return <Dashboard />
 }
 
 export default App;
