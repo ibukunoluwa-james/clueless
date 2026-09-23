@@ -1,7 +1,6 @@
-import { label } from "framer-motion/m";
 import type { AssistantStatus } from "./Overlay";
 
-interface StatusIndicator {
+interface StatusIndicatorProps {
   status: AssistantStatus;
 }
 
@@ -17,7 +16,7 @@ const statusConfig = {
   },
 
   processing: {
-    label: "thinking",
+    label: "Thinking",
     dot: "bg-yellow-400 animate-pulse",
   },
 
@@ -32,7 +31,7 @@ const statusConfig = {
   },
 };
 
-export function StatusIndicator({ status }: StatusIndicator) {
+export function StatusIndicator({ status }: StatusIndicatorProps) {
   const config = statusConfig[status];
 
   return (

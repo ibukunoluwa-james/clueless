@@ -29,8 +29,12 @@ function Dashboard() {
       }
     };
 
-  const testListening = () => {
-    setStatus("listening");
+  const testListening = async () => {
+    try {
+      await invoke("test_listening");
+    } catch (error) {
+      console.error(error)
+    }
   };
 
   const testProcessing = () => {

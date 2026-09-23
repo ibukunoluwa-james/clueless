@@ -1,10 +1,21 @@
 use tauri::State;
 
 use crate::core::{
-    events::{AppEvent, EventSender},
+    app_context::AppContext,
+    events::{AppEvent, publish},
     state::SharedState,
 };
-use crate::core::events::publish;
+
+#[tauri::command]
+pub fn test_listening(
+    context: State<'_, AppContext>,
+) -> Result<(), String> {
+    publish(
+        context.events(),
+        AppEvent::ListeningStarted,
+    )
+    .map_err(|error| error.to_string())
+}
 
 #[tauri::command]
 pub fn get_app_state() {}
